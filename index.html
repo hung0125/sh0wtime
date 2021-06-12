@@ -1,6 +1,46 @@
 <html>
     <body>
-        <h1>Welcome to 粵語拼音發聲器"</h1>
-        <input placeholder="nei2,ho2"/>
+        <h1>Welcome to 粵語拼音發聲器</h1>
+        <h2>系統只會說正確拼音的字喔!</h2>
+        <h3>Sound source: https://humanum.arts.cuhk.edu.hk/</h3>
+        <input value="nei2,hou2" id = "words"/>
+        <button id = "playBut" onclick="playWd()">Play!</button>
+
+        <script>
+            function playWd()
+            {
+                document.getElementById("playBut").disabled = true;
+                wl = document.getElementById("words").value.split(",");
+                for(i = 0; i < wl.length + 1; i++)
+                {
+                    
+                    if(i < wl.length)
+                    {
+                        doTimeoutForWord(i);
+
+                    }else
+                    {
+                        doTimeoutForReset(i);
+                    }
+
+                }
+            }
+
+            function doTimeoutForWord(i)
+            {
+                setTimeout(function() {
+                    a = new Audio(`https://humanum.arts.cuhk.edu.hk/Lexis/lexi-can/sound/${wl[i]}.wav`);
+                    a.play();
+                }, (i+1)*1000);
+            }
+            
+            function doTimeoutForReset(i)
+            {
+                setTimeout(function() {
+                    document.getElementById("playBut").disabled = false;
+                    alert(`我剛剛說了${wl.length}個字!`);
+                }, (i+1)*1000);                
+            }
+        </script>
     </body>
 </html>
