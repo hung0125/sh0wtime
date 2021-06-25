@@ -2,7 +2,7 @@
     <style>
         body
         {
-            background-color:darkgrey;
+            background-color: antiquewhite;
         }
         h1
         {
@@ -48,7 +48,7 @@
             margin: auto;
             width: 50%;
             border: 3px solid red;
-            padding:10px;
+            padding: 10px;
             height: 20%;
             overflow-x: hidden;
             overflow-y: auto;
@@ -59,17 +59,18 @@
         {
             text-align: center;
         }
+
     </style>
     <body>
-        <h1>FunBattle! (Biology Edition)</h1>
+        <h1>FunBattle! (Country Edition)</h1>
         <div id="inp">
-            <input id="charA" placeholder="Name of character A"/>
-            <input id="charB" placeholder="Name of character B"/>
-            <button id="Fight" onclick="fight()">Fight</button>
+            <input id="charA" placeholder="Name of country A"/>
+            <input id="charB" placeholder="Name of country B"/>
+            <button id="Fight" onclick="fight()">Battle</button>
             <br><br>
             <input id="dmgFrom" placeholder="Default (from): 0"/> -
-            <input id="dmgTo" placeholder="Default (to): 100"/>
-            <button id="setRange" onclick="setRange()">Set Damage Range</button>
+            <input id="dmgTo" placeholder="Default (to): 100000"/>
+            <button id="setRange" onclick="setRange()">Set Population Loss Range</button>
         </div>
         <div id = "langChoice">
             Language choice/語言選擇: 
@@ -77,58 +78,49 @@
             <button id = "setLan2" onclick="setEn()">English</button>
         </div>
         <div id="charStat">
-            <div id="HPA"><b style="color: green;">??</b>'s HP:1000</div>
+            <div id="HPA"><b style="color: green;">??</b>'s population:1000000</div>
             ||
-            <div id="HPB"><b style="color: purple;">??</b>'s HP:1000</h5></div>
+            <div id="HPB"><b style="color: purple;">??</b>'s population:1000000</h5></div>
         </div>
 
         <div id="main"></div>
 
         <p id = "footer">
             <a href="https://github.com/hung0125/" target="_blank">Home</a>
-            <a href="https://hung0125.github.io/sh0wtime/minigames/FunBattle2.html">Country Edition</a>
+            <a href="https://hung0125.github.io/sh0wtime/minigames/FunBattle1.html">Biology Edition</a>
         </p>
-
     </body>
     <script>
+        //For detailed comments, please refer to Biological editions.
         //Define current language choice
         lang = "En";
-
+        
         //Define list of attack descriptions
         attackDescriptions = [
-            "{atk} stepped on {rec}'s feet. Dealt {DMG} damage.<br><br>",
-            "{atk} knocked {rec}'s head with fist. Dealt {DMG} damage.<br><br>",
-            "{atk} knocked {rec}'s head with hammer. Dealt {DMG} damage.<br><br>",
-            "{atk} punched {rec}'s face. Dealt {DMG} damage.<br><br>",
-            "{atk} attacked {rec} with knife. Dealt {DMG} damage.<br><br>",
-            "{atk} called police, police shot {rec}. Dealt {DMG} damage.<br><br>",
-            "{atk} poured hot water on {rec}. Dealt {DMG} damage.<br><br>",
-            "{atk} said something which hurts {rec}'s self-esteem. Dealt {DMG} damage.<br><br>",
-            "{atk} clapped {rec}'s face. Dealt {DMG} damage.<br><br>",
-            "{atk} choked {rec}. Dealt {DMG} damage.<br><br>"
+            "{atk} launched a nuke attack on {rec}. {rec} lost {DMG} population.<br><br>",
+            "{atk} launched several missiles to {rec}. {rec} lost {DMG} population.<br><br>",
+            "{atk} sent navy to {rec}. {rec} lost {DMG} population.<br><br>",
+            "{atk} sent army to {rec}. {rec} lost {DMG} population.<br><br>",
+            "{atk} sent air force to {rec}. {rec} lost {DMG} population.<br><br>",
+            "{atk} murdered the citizens from {rec} living in {atk}. {rec} lost {DMG} population.<br><br>"
         ];
 
         attackDescriptions_Chi = [
-            "{atk} 踩了 {rec} 的腳，造成 {DMG} 點傷害。<br><br>",
-            "{atk} 用拳頭打了 {rec} 的頭，造成 {DMG} 點傷害。<br><br>",
-            "{atk} 用鎚子敲了 {rec} 的頭，造成 {DMG} 點傷害。<br><br>",
-            "{atk} 打了 {rec} 的臉，造成 {DMG} 點傷害。<br><br>",
-            "{atk} 用刀襲擊 {rec}，造成 {DMG} 點傷害。<br><br>",
-            "{atk} 報警, 警察開槍射向 {rec}，造成 {DMG} 點傷害。<br><br>",
-            "{atk} 對 {rec} 潑了滾水，造成 {DMG} 點傷害。<br><br>",
-            "{atk} 對 {rec} 說了些損害自尊的話，造成 {DMG} 點傷害。<br><br>",
-            "{atk} 打了 {rec} 的臉, 造成 {DMG} 點傷害。<br><br>",
-            "{atk} 掐了 {rec} 的脖子, 造成 {DMG} 點傷害。<br><br>"
+            "{atk} 對 {rec} 發射核彈，{rec} 損失 {DMG} 人口。<br><br>",
+            "{atk} 對 {rec} 發射導彈，損失 {DMG} 人口。<br><br>",
+            "{atk} 對 {rec} 派出海軍，損失 {DMG} 人口。<br><br>",
+            "{atk} 對 {rec} 派出陸軍，損失 {DMG} 人口。<br><br>",
+            "{atk} 對 {rec} 派出空軍，損失 {DMG} 人口。<br><br>",
+            "{atk} 在本地殺害了來自 {rec} 的市民，損失 {DMG} 人口。<br><br>"
         ];
 
-
         //Define HP
-        hpA = 1000;  
-        hpB = 1000;
+        hpA = 1000000;  
+        hpB = 1000000;
 
         //Define damage range
         dmgFrom = 0;
-        dmgTo = 100;
+        dmgTo = 100000;
 
         //Set damage range from user input
         function setRange()
@@ -136,7 +128,7 @@
             dmgFrom = document.getElementById("dmgFrom").value*1;
             dmgTo = document.getElementById("dmgTo").value*1;
 
-            alert(`Current damage range: ${dmgFrom} - ${dmgTo}`);
+            alert(`Current population loss range: ${dmgFrom} - ${dmgTo}`);
         }
 
         //set language to Chinese
@@ -151,6 +143,7 @@
             lang = "En";
             alert("Language is set to English.");
         }
+
 
         //Fight launches from button click
         function fight()
@@ -173,15 +166,15 @@
                 //Display who has joined the fight
                 document.getElementById("main").innerHTML = `<b style="color: green;">${charA}</b> has joined the fight.<br><br><b style="color: purple;">${charB}</b> has joined the fight.<br><br>`;
                 
-                //Display initial statistics
-                document.getElementById("HPA").innerHTML = `<b style="color: green;">${charA}</b>'s HP: 1000`;
-                document.getElementById("HPB").innerHTML = `<b style="color: purple;">${charB}</b>'s HP: 1000`;
+                //Display initial statistics for each characters
+                document.getElementById("HPA").innerHTML = `<b style="color: green;">${charA}</b>'s population: 1000000`;
+                document.getElementById("HPB").innerHTML = `<b style="color: purple;">${charB}</b>'s population: 1000000`;
                 
-                //Initial initial statistics for each character
-                hpA = 1000;
-                hpB = 1000;
+                //Initialize statistics for each characters
+                hpA = 1000000;
+                hpB = 1000000;
                 
-                //Fight every 2 seconds (2000ms -> 2s)
+                //Fight every 2 seconds
                 doMain = setInterval(action, 2000);
 
             }
@@ -190,27 +183,25 @@
         //Main fight
         function action()
         {
-            //Keep fighting till one is down
             if(hpA > 0 && hpB > 0)
             {
                 updateHP();
             }else
             {
-                //Display the summarization of battle
                 if(hpA <= 0)
                     document.getElementById("main").innerHTML += `The battle is over. <b style="color: purple;">${charB}</b> defeated <b style="color: green;">${charA}</b>!`;
                 else
                     document.getElementById("main").innerHTML += `The battle is over. <b style="color: green;">${charA}</b> defeated <b style="color: purple;">${charB}</b>!`;
 
-                //Enable buttons
                 document.getElementById("Fight").disabled = false;
                 document.getElementById("setRange").disabled = false;
                 document.getElementById("setLan").disabled = false;
                 document.getElementById("setLan2").disabled = false;
 
+
                 clearInterval(doMain);
             }
-            
+
             scrollMain = document.getElementById("main");
             scrollMain.scrollTop = scrollMain.scrollHeight;
         }
@@ -218,19 +209,14 @@
         //Update HP for each character
         function updateHP()
         {
-            //Define random damage
             damage = Math.floor(Math.random() * (dmgTo + 1 - dmgFrom) + dmgFrom);
-
-            //Define who does the damage & who takes the damage
             attackRole = Math.floor(Math.random() * 2);
 
             if(attackRole == 0)
             {
-                //attacker = charA
-                //receiver = charB
+                //attacker = charA;
+                //receiver = charB;
                 damage = Math.min(damage, hpB);
-
-                //Display attack descriptions
                 document.getElementById("main").innerHTML += lang == "En"? attackDescriptions[Math.floor(Math.random() * attackDescriptions.length)]
                     .replaceAll("{atk}",`<b style='color: green;'>${charA}</b>`)
                     .replaceAll("{rec}", `<b style='color: purple;'>${charB}</b>`)
@@ -239,23 +225,18 @@
                     .replaceAll("{atk}",`<b style='color: green;'>${charA}</b>`)
                     .replaceAll("{rec}", `<b style='color: purple;'>${charB}</b>`)
                     .replace("{DMG}", `<b style='color: red;'>${damage}</b>`);
-                
-                //Apply the damage change
-                hpB -= damage;
 
-                //Red text effect
-                document.getElementById("HPB").innerHTML = `<b style="color: purple;">${charB}</b>'s HP: <nobr style="color:red">${hpB}</nobr>`;
+                hpB -= damage;
+                document.getElementById("HPB").innerHTML = `<b style="color: purple;">${charB}</b>'s population: <nobr style="color:red">${hpB}</nobr>`;
                 setTimeout(function(){
-                    document.getElementById("HPB").innerHTML = `<b style="color: purple;">${charB}</b>'s HP: ${hpB}`;
+                    document.getElementById("HPB").innerHTML = `<b style="color: purple;">${charB}</b>'s population: ${hpB}`;
                 }, 500);
             }
             else
             {
-                //attacker = charB
-                //receiver = charA
+                //attacker = charB;
+                //receiver = charA;
                 damage = Math.min(damage, hpA);
-
-                //Display attack descriptions
                 document.getElementById("main").innerHTML += lang == "En"? attackDescriptions[Math.floor(Math.random() * attackDescriptions.length)]
                     .replaceAll("{atk}",`<b style='color: purple;'>${charB}</b>`)
                     .replaceAll("{rec}", `<b style='color: green;'>${charA}</b>`)
@@ -265,13 +246,10 @@
                     .replaceAll("{rec}", `<b style='color: green;'>${charA}</b>`)
                     .replace("{DMG}", `<b style='color: red;'>${damage}</b>`);
 
-                //Apply the damage change
                 hpA -= damage;
-
-                //Red text effect
-                document.getElementById("HPA").innerHTML = `<b style="color: green;">${charA}</b>'s HP: <nobr style="color:red">${hpA}</nobr>`;
+                document.getElementById("HPA").innerHTML = `<b style="color: green;">${charA}</b>'s population: <nobr style="color:red">${hpA}</nobr>`;
                 setTimeout(function(){
-                    document.getElementById("HPA").innerHTML = `<b style="color: green;">${charA}</b>'s HP: ${hpA}`;
+                    document.getElementById("HPA").innerHTML = `<b style="color: green;">${charA}</b>'s population: ${hpA}`;
                 }, 500);
             }
         }
