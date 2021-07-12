@@ -1,56 +1,5 @@
 <html>
     <body>
-        <h1>Welcome to 粵語拼音發聲器</h1>
-        <h2>系統只會說正確拼音的字喔!</h2>
-        <h3>Sound source: https://humanum.arts.cuhk.edu.hk/</h3>
-        <input value="nei2 hou2" id = "words"/>
-        朗讀速度(毫秒/字):<input value="1000" id = "wps"/>
-        <button id = "playBut" onclick="playWd()">Play!</button>
-
-        <h2>轉換工具</h2>
-        <iframe src="https://hongkongvision.com/tool/cc_py_conv_zh"></iframe>
-        <script>
-            speakSpeed = 1000;
-            function playWd()
-            {
-                document.getElementById("playBut").disabled = true;
-                speakSpeed = document.getElementById("wps").value * 1;
-                timePoint = 0;
-                wl = document.getElementById("words").value.split(" ");
-                for(i = 0; i < wl.length + 1; i++)
-                {   
-                    if(i < wl.length)
-                    {
-                        doTimeoutForWord(timePoint, i);
-                        
-                        if(i < wl.length - 1)
-                            timePoint += speakSpeed;
-                        else
-                            timePoint += 1000;
-
-                    }else
-                    {
-                        doTimeoutForReset(timePoint);
-                    }
-
-                }
-            }
-
-            function doTimeoutForWord(timePoint, i)
-            {
-                setTimeout(function() {
-                    a = new Audio(`https://humanum.arts.cuhk.edu.hk/Lexis/lexi-can/sound/${wl[i]}.wav`);
-                    a.play();
-                }, timePoint);
-            }
-            
-            function doTimeoutForReset(timePoint)
-            {
-                setTimeout(function() {
-                    document.getElementById("playBut").disabled = false;
-                    alert(`我剛剛說了${wl.length}個字!`);
-                }, timePoint);                
-            }
-        </script>
+        <h1>This site stores shits about just 4 fun</h1>
     </body>
 </html>
